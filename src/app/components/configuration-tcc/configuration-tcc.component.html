@@ -1,0 +1,599 @@
+<div class="container">
+  <div class="row align-items-start">
+    <div class="col-sm">
+      <div class=" collapse-division" style="clear: none;">
+        <label class="collapse-division-label">
+          <a class="sub-collapse-label" data-toggle="collapse"
+             href="#CampusConfig" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Campus Configuration
+            <i class="material-icons float-right">
+              keyboard_arrow_down
+            </i>
+          </a>
+        </label>
+        <div class="collapse" id="CampusConfig">
+          <div class="card card-body" id="clusterForm">
+
+            <mat-form-field style="width: 100%">
+              <mat-label>Campus</mat-label>
+              <mat-select
+                [(ngModel)]=campus>
+                <div *ngFor="let camp of campusList">
+                  <mat-option value="{{camp}}">{{camp}}</mat-option>
+                </div>
+              </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field style="width: 100%">
+              <mat-label>Building</mat-label>
+              <mat-select
+                [(ngModel)]=building>
+                <div *ngFor="let build of buildingList">
+                  <mat-option value="{{build}}">{{build}}</mat-option>
+                </div>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%">
+              <mat-label>Input Data TimeZone</mat-label>
+              <mat-select [(ngModel)]="input_data_timezone">
+                <mat-option style="font-size: 12px" value="PST">PST</mat-option>
+                <mat-option style="font-size: 12px" value="EST">EST</mat-option>
+                <mat-option style="font-size: 12px" value="UTC">UTC</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class=" collapse-division" style="clear: none;">
+        <label class="collapse-division-label">
+          <a class="sub-collapse-label" data-toggle="collapse"
+             href="#AgentConfig" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Agent Configuration
+            <i class="material-icons float-right">
+              keyboard_arrow_down
+            </i>
+          </a>
+        </label>
+        <div class="collapse" id="AgentConfig">
+          <div class="card card-body" id="agentForm">
+            <mat-form-field style="width: 100%">
+              <mat-label>Topic</mat-label>
+              <mat-select>
+                <div *ngFor="let device of this.masterDevice">
+                  <mat-option value="{{device.deviceTopic}}">{{device.deviceTopic}}</mat-option>
+                </div>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100%">
+              <mat-label>Agent Type</mat-label>
+              <mat-select [(ngModel)]="agent_type">
+                <mat-option value="AHU">AHU</mat-option>
+                <mat-option value="LIGHT">LIGHT</mat-option>
+                <mat-option value="VAV">VAV</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Agent Name" name="agentname"
+                     [(ngModel)]="agent_name"></mat-form-field>
+
+            <div *ngIf="agent_type == 'AHU'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Supplier Market Name"
+                       name="supplier" [(ngModel)]="supplier_market_name"></mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Consumer market Name"
+                       name="consumer" [(ngModel)]="consumer_market_name"></mat-form-field>
+            </div>
+
+
+            <div *ngIf="agent_type == 'LIGHT' ||  agent_type == 'VAV'">
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value=false [(ngModel)]="actuation_enabled_onstart"
+                       id="actuationEnable">
+                <label class="form-check-label">
+                  Enable Actuation (on start)
+                </label>
+              </div>
+
+              <mat-form-field *ngIf="agent_type == 'VAV'" class="example-full-width">
+                <input matInput placeholder="Actuation Method"
+                       name="controlInterval" [(ngModel)]="actuation_method"></mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <input type="number" matInput placeholder="Control Interval"
+                       name="controlInterval" [(ngModel)]="control_interval"></mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Market Name"
+                       name="consumer" [(ngModel)]="market_name"></mat-form-field>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class=" collapse-division" style="clear: none;">
+        <label class="collapse-division-label">
+          <a class="sub-collapse-label" data-toggle="collapse"
+             href="#input" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Inputs
+            <i class="material-icons float-right">
+              keyboard_arrow_down
+            </i>
+          </a>
+        </label>
+        <div class="collapse" id="input">
+          <div class="card card-body" id="inputForm">
+            <div *ngFor="let input of inputs">
+              <hr>
+              <div>
+
+                <mat-form-field style="width: 100%">
+                  <mat-label>Topic</mat-label>
+                  <mat-select [(ngModel)]="input.topic">
+                    <div *ngFor="let device of this.masterDevice">
+                      <mat-option value="{{device.deviceTopic}}">{{device.deviceTopic}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100%">
+                  <mat-label>Point</mat-label>
+                  <mat-select [(ngModel)]="input.point">
+                    <div *ngFor="let point of getInputPointList(input.topic);">
+                      <mat-option style="font-size: 12px"
+                                  value="{{point}}">{{point}}</mat-option>
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                  <input type="number" matInput placeholder="Initial Value" [(ngModel)]="input.inital_value" name="initialVal">
+                </mat-form-field>
+
+
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Mapped"
+                         name="mapped" [(ngModel)]="input.mapped"></mat-form-field>
+                <hr>
+
+              </div>
+            </div>
+
+            <button id="addAugment" class="float-left" (click)="addInput()"
+                    style="color: #1BA781; margin-top: 1%; background-color: white; border-color: #1BA781">
+              <i class="material-icons float-left">add</i> Add Input
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class=" collapse-division" style="clear: none;">
+        <label class="collapse-division-label">
+          <a class="sub-collapse-label" data-toggle="collapse"
+             href="#output" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Outputs
+            <i class="material-icons float-right">
+              keyboard_arrow_down
+            </i>
+          </a>
+        </label>
+        <div class="collapse" id="output">
+          <div class="card card-body" id="outputForm">
+
+            <div *ngFor="let output of this.outputs">
+
+              <mat-form-field style="width: 100%">
+                <mat-label>Topic</mat-label>
+                <mat-select [(ngModel)]="output.topic">
+                  <div *ngFor="let device of this.masterDevice">
+                    <mat-option value="{{device.deviceTopic}}">{{device.deviceTopic}}</mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+
+              <mat-form-field style="width: 100%">
+                <mat-label>Point</mat-label>
+                <mat-select [(ngModel)]="output.point">
+                  <div *ngFor="let point of getInputPointList(output.topic);">
+                    <mat-option style="font-size: 12px"
+                                value="{{point}}">{{point}}</mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Mapped"
+                       name="controlInterval" [(ngModel)]="output.mapped"></mat-form-field>
+
+              <div align="center">
+                <div class="container">
+                  <div class="row">
+                    <div style="padding-top: 5%;" class="col-sm">
+                      <h6 style="margin-right: 20%" class="float-left">Flexibility range</h6>
+                    </div>
+                    <div class="col-sm">
+                      <mat-form-field class="example-full-width">
+                        <input type="number" [(ngModel)]="output.flexibility_range[0]" matInput name="campus">
+                      </mat-form-field>
+                      <mat-form-field style="margin-right:10%" class="example-full-width">
+                        <input type="number" [(ngModel)]="output.flexibility_range[1]" matInput name="campus">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div align="center">
+                <div class="container">
+                  <div class="row">
+                    <div style="padding-top: 5%;" class="col-sm">
+                      <h6 style="margin-right: 20%" class="float-left">Control Flexibility</h6>
+                    </div>
+                    <div class="col-sm">
+                      <mat-form-field class="example-full-width">
+                        <input type="number" [(ngModel)]="output.control_flexbility[0]" placeholder="csm/m/s" matInput
+                               name="campus"></mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <input type="number" [(ngModel)]="output.control_flexbility[1]" placeholder="csm/m/s" matInput
+                               name="campus"></mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="output.off_setpoint" type="number" matInput placeholder="Off Set Point"
+                       name="offsetpoint"></mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="output.actuator" matInput placeholder="Actuator" name="actuator"></mat-form-field>
+
+              <mat-form-field style="width: 100%">
+                <mat-label>Release</mat-label>
+                <mat-select [(ngModel)]="output.release">
+                  <mat-option style="font-size: 12px" value="None">None</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="output.release" type="number" matInput placeholder="Fallback" name="fallback">
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="output.offset" type="number" matInput placeholder="Offset" name="offset">
+              </mat-form-field>
+
+              <hr>
+            </div>
+
+
+            <button id="addOutput" class="float-left" (click)="addOutput()"
+                    style="color: #1BA781; margin-top: 1%; background-color: white; border-color: #1BA781">
+              <i class="material-icons float-left">add</i> Add Output
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+      <!--      Schedule DIV-->
+
+      <div class=" collapse-division" style="clear: none;">
+        <label class="collapse-division-label">
+          <a class="sub-collapse-label" data-toggle="collapse"
+             href="#schedule" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Schedule
+            <i class="material-icons float-right">
+              keyboard_arrow_down
+            </i>
+          </a>
+        </label>
+        <div class="collapse" id="schedule">
+          <div class="card card-body" id="scheduleForm">
+            <div align="center">
+
+
+              <div align="center">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="float-left">Monday</h5>
+                    </div>
+                    <div class="col-sm">
+                      <mat-form-field class="example-full-width">
+                        <input type="time" matInput [(ngModel)]="monday.start" placeholder="Start" name="startTime">
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <input [(ngModel)]="monday.end" type="time" matInput placeholder="End" name="endTime">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div align="center">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="float-left">Tuesday</h5>
+                    </div>
+                    <div class="col-sm">
+                      <mat-form-field class="example-full-width">
+                        <input [(ngModel)]="tuesday.start" type="time" matInput placeholder="Start" name="startTime">
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <input type="time" [(ngModel)]="tuesday.end" matInput placeholder="End" name="endTime">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div align="center">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="float-left">Wednesday</h5>
+                    </div>
+                    <div class="col-sm">
+                      <mat-form-field class="example-full-width">
+                        <input type="time" [(ngModel)]="wednesday.start" matInput placeholder="Start" name="startTime">
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <input type="time" [(ngModel)]="wednesday.end" matInput placeholder="End" name="endTime">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div align="center">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="float-left">Thursday</h5>
+                    </div>
+                    <div class="col-sm">
+                      <mat-form-field class="example-full-width">
+                        <input [(ngModel)]="thrusday.start" type="time" matInput placeholder="Start" name="startTime">
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <input type="time" [(ngModel)]="thrusday.end" matInput placeholder="End" name="endTime">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div align="center">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="float-left">Friday</h5>
+                    </div>
+                    <div class="col-sm">
+                      <mat-form-field class="example-full-width">
+                        <input type="time" [(ngModel)]="friday.start" matInput placeholder="Start" name="startTime">
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <input type="time" [(ngModel)]="friday.end" matInput placeholder="End" name="endTime">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div align="center">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="float-left">Saturday</h5>
+                    </div>
+                    <div class="col-sm">
+                      <mat-form-field class="example-full-width">
+                        <input type="time" [(ngModel)]="saturday.start" matInput placeholder="Start" name="startTime">
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <input type="time" [(ngModel)]="saturday.end" matInput placeholder="End" name="endTime">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div align="center">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="float-left">Sunday</h5>
+                    </div>
+                    <div class="col-sm">
+                      <mat-form-field class="example-full-width">
+                        <input type="time" [(ngModel)]="sunday.start" matInput placeholder="Start" name="startTime">
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <input type="time" [(ngModel)]="sunday.end" matInput placeholder="End" name="endTime">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--    Center div start-->
+
+    <div class="col-sm">
+      <div class=" collapse-division" style="clear: none;">
+        <label class="collapse-division-label">
+          <a class="sub-collapse-label" data-toggle="collapse"
+             href="#modelConfig" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Campus Configuration
+            <i class="material-icons float-right">
+              keyboard_arrow_down
+            </i>
+          </a>
+        </label>
+        <div class="collapse" id="modelConfig">
+          <div class="card card-body" id="modelForm">
+
+            <mat-form-field style="width: 100%">
+              <mat-label>Devices</mat-label>
+              <mat-select [(ngModel)]="deviceSection">
+                <mat-option style="font-size: 12px" value="AHU">AHU</mat-option>
+                <mat-option style="font-size: 12px" value="LIGHT">LIGHT</mat-option>
+                <mat-option style="font-size: 12px" value="VAV">VAV</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="deviceSection == 'LIGHT' || deviceSection == 'VAV'" style="width: 100%">
+              <mat-label>Model Type</mat-label>
+              <mat-select [(ngModel)]="model_type">
+                <mat-option style="font-size: 12px" value="firstorderzone">firstorderzone</mat-option>
+                <mat-option style="font-size: 12px" value="simple">simple</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+
+      <div class=" collapse-division" style="clear: none;">
+        <label class="collapse-division-label">
+          <a class="sub-collapse-label" data-toggle="collapse"
+             href="#modelparameters" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Model Parameters
+            <i class="material-icons float-right">
+              keyboard_arrow_down
+            </i>
+          </a>
+        </label>
+        <div class="collapse" id="modelparameters">
+          <div class="card card-body" id="modelparaForm">
+
+            <div *ngIf="deviceSection == 'AHU'">
+              <h4>equipment_configuration</h4>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value=false
+                       [(ngModel)]="equipment_configuration.hasa_economizer"
+                       id="hasa">
+                <label class="form-check-label">
+                  hasa_economizer
+                </label>
+              </div>
+              <!--              <mat-form-field class="example-full-width">-->
+              <!--                <input placeholder="hasa_economizer" type="text" matInput name="hasaecomizer"></mat-form-field>-->
+              <mat-form-field class="example-full-width">
+                <input  [(ngModel)]="equipment_configuration.economizer_limit" placeholder="economizer_limit" type="number"
+                       matInput name="ecomizerlimit"></mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="equipment_configuration.supply_air_sepoint" placeholder="supply-air setpoint"
+                       type="number" matInput name="supplyairsetpoint"></mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="equipment_configuration.nominal_zone_setpoint" placeholder="nominal zone-setpoint"
+                       type="number" matInput name="nominalzonesetpoint">
+              </mat-form-field>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value=false
+                       [(ngModel)]="equipment_configuration.building_chiller"
+                       id="building chiler">
+                <label class="form-check-label">
+                  Building Chiller
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value=false
+                       [(ngModel)]="equipment_configuration.variable_volume"
+                       id="variableVolume">
+                <label class="form-check-label">
+                  Variable Volume
+                </label>
+              </div>
+              <h4>model_configuration</h4>
+              <mat-form-field class="example-full-width">
+                <input  [(ngModel)]="model_configuration.c0" placeholder="c0" type="number" matInput name="c0">
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="model_configuration.c1" placeholder="c1" type="number" matInput name="c1">
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="model_configuration.c2" placeholder="c2" type="number" matInput name="c2">
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="model_configuration.c3" placeholder="c3" type="number" matInput name="c3">
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="model_configuration.cpAir" placeholder="cpAir" type="number" matInput name="cpair">
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="model_configuration.COP" placeholder="COP" type="number" matInput name="cop">
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="model_configuration.mDotAir" placeholder="mDotAir" type="number" matInput
+                       name="mdotair"></mat-form-field>
+            </div>
+
+            <div *ngIf="deviceSection == 'LIGHT'">
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]="rated_power" placeholder="Rated Power" type="number" matInput name="ratedPower">
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="deviceSection == 'VAV'">
+              <div>
+                <div *ngFor="let csv of csvResult;">
+                  <div *ngFor="let value of csv;">
+                    <h6>{{value}}</h6>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+
+              <input type="file" [(ngModel)]="masterFile" (change)="getMasterDriver($event)" #file hidden>
+              <button style="margin-top: 1%" class="btn btn-outline-dark btn-lg "
+                      (click)="file.click(); getMasterDriver($event)">
+                &nbsp; Upload File
+                <i class="material-icons float-left">
+                  publish
+                </i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!--    Center div end-->
+
+    <div class="col-sm" style="height: 200px;">
+      <div class="row align-items-start">
+        <h5>File Preview</h5>
+        <button class="btn  button-size" (click)="onRefreshClick()"><i class="material-icons float-left">autorenew</i>&nbsp;Refresh
+        </button>
+        <button class="btn  button-size"><i class="material-icons float-left">
+          get_app
+        </i>Save
+        </button>
+      </div>
+      <textarea id="checktext">
+        {{this.finalCalculation}}
+          </textarea>
+    </div>
+  </div>
+</div>

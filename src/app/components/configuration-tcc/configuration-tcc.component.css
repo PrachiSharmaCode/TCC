@@ -1,0 +1,77 @@
+.mainDisplay{
+  display: grid;
+  grid-template-columns: 33.4% 33.4% 33.4%;
+  width: 100%;
+  height: 100%;
+  /*text-align: center;*/
+}
+
+.collapse-division {
+  margin-bottom: 10px ;
+  background-color: #003114;
+}
+
+.sub-collapse-label{
+  padding-left: 2%;
+  font-size: 17px;
+  color: white;
+}
+
+.collapse-division-label {
+  width: 100%;
+  background-color: #003114;
+  color: white;
+  font-size: 17px;
+}
+
+h1{
+  color: black;
+}
+
+
+.col-sm{
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.row{
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.container{
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
+.example-full-width{
+  width: 100%;
+}
+
+.button-size {
+  width: 100px;
+  text-align: center;
+  border-radius: 100px;
+  margin-left: 10px;
+  background-color: #1BA781;
+  color: white;
+}
+
+.button-size:hover{
+  background-color: #B3DAF2;
+  color: black;
+}
+
+textarea {
+  margin-top: 2%;
+  background-color: lightgray;
+  width: 100%;
+  height: 200%;
+}
+
+example-half-width{
+  width: 40%;
+}
+
+

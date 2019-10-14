@@ -1,0 +1,55 @@
+nav {
+  background-color: black;
+  margin-bottom: 2%;
+}
+
+.navHeading {
+  color: white
+}
+
+button {
+  background-color: #1BA781;
+  border-radius: 100px;
+  border: none;
+  color: white;
+}
+
+button:hover {
+  background-color: #B3DAF2;
+  color: black;
+}
+
+.button-nav {
+  width: 150px;
+  border-radius: 100px;
+}
+
+.active-button {
+  background-color: #B3DAF2;
+}
+
+.active-text {
+  color: black;
+}
+
+.div-design {
+  background-color: white;
+  margin-bottom: 20%;
+  padding: 2%;
+  border: groove black;
+}
+
+.container {
+  margin-top: 10%;
+  width: 30%;
+}
+
+.button-container {
+  width: 200px;
+  padding: 2px;
+  margin-bottom: 1%;
+}
+
+i {
+  padding-left: 5%;
+}

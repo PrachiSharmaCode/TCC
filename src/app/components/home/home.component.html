@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand navHeading" href="#">
+    <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
+    TCC Configuration
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <ul class="nav justify-content-center mx-auto ">
+        <li class="nav-item pad-button liAlign">
+          <button (click)="goToHomePage()" id="homeButton" class="btn btn-outline-dark button-nav">Home</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container" *ngIf="showHomePage">
+  <div class="row">
+    <div class="col div-design" align="center">
+      <button class="button-container btn btn-outline-dark" (click)="showConfigurationPage()">
+        <i class="material-icons float-left">add</i> Create New Config
+      </button>
+      <p> Start a new TCC Configuration file from a blank template.<br> Specify campus, building and model parameters.
+      </p>
+    </div>
+    <div class="w-100"></div>
+    <div class="col div-design" align="center">
+      <input type="file" [(ngModel)]="masterFile" (change)="getMasterDriver($event)" #file hidden>
+      <button class="button-container btn btn-outline-dark" (click)="file.click(); getMasterDriver($event)">
+        &nbsp;  <i class="material-icons float-left">edit</i> Create New Config
+      </button>
+      <p>Make modifications to a TCC configuration that is already completed</p>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="!showHomePage">
+  <app-configuration-tcc [home]="home"></app-configuration-tcc>
+</div>
+
+
+
+
+<router-outlet></router-outlet>
