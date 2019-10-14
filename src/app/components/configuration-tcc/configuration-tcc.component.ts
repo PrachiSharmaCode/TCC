@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HomeModel} from '../../model/home.model';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-configuration-tcc',
@@ -23,6 +24,7 @@ export class ConfigurationTCCComponent implements OnInit {
   inputsValues = 'inputs';
   outputsValues = 'outputs';
   modelType = 'model_type';
+  terminalBox = 'terminal_box_type';
 
   supplyAir = 'supply-air setpoint';
   nominal = 'nominal zone-setpoint';
@@ -175,6 +177,9 @@ export class ConfigurationTCCComponent implements OnInit {
 
   // tslint:disable-next-line:variable-name
   model_type: string;
+
+  // tslint:disable-next-line:variable-name
+  terminal_box_type: string;
 
   // tslint:disable-next-line:variable-name
   agent_type: string;
@@ -334,6 +339,7 @@ export class ConfigurationTCCComponent implements OnInit {
       obj[this.modelPara] = {};
       obj[this.modelPara] = this.vavFile;
       obj[this.modelPara][this.modelType] = this.model_type;
+      obj[this.modelPara][this.terminalBox] = this.terminal_box_type;
 
     }
 
@@ -352,6 +358,12 @@ export class ConfigurationTCCComponent implements OnInit {
     // delete obj[this.modelPara].equipment_configuration.variable_volume;
     this.finalCalculation = JSON.stringify(obj, null, 4);
     console.log(this.finalCalculation);
+  }
+
+  saveCriteriatCalculation() {
+    const file = new Blob([this.finalCalculation ],
+      {type: 'json'});
+    FileSaver.saveAs(file, 'TCC.json');
   }
 
   getInputPointList(topic) {

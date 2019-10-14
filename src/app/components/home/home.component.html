@@ -20,18 +20,18 @@
 
 <div class="container" *ngIf="showHomePage">
   <div class="row">
-    <div class="col div-design" align="center">
-      <button class="button-container btn btn-outline-dark" (click)="showConfigurationPage()">
-        <i class="material-icons float-left">add</i> Create New Config
-      </button>
-      <p> Start a new TCC Configuration file from a blank template.<br> Specify campus, building and model parameters.
-      </p>
-    </div>
-    <div class="w-100"></div>
+<!--    <div class="col div-design" align="center">-->
+<!--      <button class="button-container btn btn-outline-dark" (click)="showConfigurationPage()">-->
+<!--        <i class="material-icons float-left">add</i> Create New Config-->
+<!--      </button>-->
+<!--      <p> Start a new TCC Configuration file from a blank template.<br> Specify campus, building and model parameters.-->
+<!--      </p>-->
+<!--    </div>-->
+<!--    <div class="w-100"></div>-->
     <div class="col div-design" align="center">
       <input type="file" [(ngModel)]="masterFile" (change)="getMasterDriver($event)" #file hidden>
       <button class="button-container btn btn-outline-dark" (click)="file.click(); getMasterDriver($event)">
-        &nbsp;  <i class="material-icons float-left">edit</i> Create New Config
+        &nbsp;  <i class="material-icons float-left">publish</i> Upload master Driver
       </button>
       <p>Make modifications to a TCC configuration that is already completed</p>
     </div>

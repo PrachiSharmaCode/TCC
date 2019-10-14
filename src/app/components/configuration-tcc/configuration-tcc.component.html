@@ -465,6 +465,10 @@
                 <mat-option style="font-size: 12px" value="simple">simple</mat-option>
               </mat-select>
             </mat-form-field>
+
+            <mat-form-field class="example-full-width" *ngIf=" deviceSection == 'VAV'">
+              <input [(ngModel)]="terminal_box_type" placeholder="Terminal Box Type"
+                     matInput name="terminalBix"></mat-form-field>
           </div>
         </div>
       </div>
@@ -586,7 +590,7 @@
         <h5>File Preview</h5>
         <button class="btn  button-size" (click)="onRefreshClick()"><i class="material-icons float-left">autorenew</i>&nbsp;Refresh
         </button>
-        <button class="btn  button-size"><i class="material-icons float-left">
+        <button class="btn  button-size" (click)="saveCriteriatCalculation()"><i class="material-icons float-left">
           get_app
         </i>Save
         </button>
